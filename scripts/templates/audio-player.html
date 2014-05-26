@@ -1,6 +1,11 @@
 <div class="audio-player">
-    <button class="btn play" ng-click="togglePlay()"></button>
-    <input type="range" min="0" max="100" value="0" readonly class="scrub-bar">
-    <button class="btn mute" ng-click="togglePause()"></button>
-    <label></label>
+    <button class="btn play" ng-class="{ pause:audioCtrl.playing }" ng-click="audioCtrl.togglePlay()"></button>
+
+    <input type="range" min="0" max="100" ng-model="audioCtrl.progress" class="scrub-bar" readonly>
+
+    <button class="btn mute" ng-class="{ unmute:audioCtrl.muted }" ng-click="audioCtrl.toggleSound()"></button>
+
+    <label class="time-label">
+        {{audioCtrl.currentTime | time}}/{{audioCtrl.duration | time}}
+    </label>
 </div>

@@ -6,10 +6,7 @@
     border: 1px solid #ccc;
     padding: 5px;
     position: relative;
-    width: 298px;
-    -webkit-box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.6);
-    -moz-box-shadow:    0px 2px 5px 0px rgba(50, 50, 50, 0.6);
-    box-shadow:         0px 2px 5px 0px rgba(50, 50, 50, 0.6);
+    width: 418px;
     background: rgb(246,248,249); /* Old browsers */
     background: -moz-linear-gradient(top,  rgba(246,248,249,1) 0%, rgba(229,235,238,1) 50%, rgba(215,222,227,1) 51%, rgba(245,247,249,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(50%,rgba(229,235,238,1)), color-stop(51%,rgba(215,222,227,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
@@ -50,4 +47,10 @@
 .scrub-bar {
     position: relative;
     width: 238px;
+}
+
+.time-label {
+    position: relative;
+    text-align: right;
+    font-family: "Lucida Grande";
 }

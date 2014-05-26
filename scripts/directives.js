@@ -2,8 +2,8 @@
  * Created by flammenmensch on 26.05.14.
  */
 (function () {
-	angular.module('ng-player.directives', [ 'ng-player.services' ])
-		.directive('audioPlayer', [ '$timeout', 'audio', function ($timeout, audio) {
+	angular.module('ng-player.directives', [ 'ng-player.services', 'ng-player.filters' ])
+		.directive('audioPlayer', [ 'audio', '$rootScope', function (audio, $scope) {
 			return {
 				replace     : true,
 				restrict    : 'E',
@@ -11,73 +11,67 @@
 				scope       : {
 					source: '@'
 				},
-				link: function (scope, element, attributes) {
-					var children = element.children();
+				controllerAs: 'audioCtrl',
+				controller: [ '$scope', 'audio', function ($scope, audio) {
+					var audioCtrl = this;
 
-					var playButton      = angular.element(children[0]);
-					var scrubBar		= angular.element(children[1])
-					var muteButton      = angular.element(children[2]);
+					this.playing = false;
+					this.muted = false;
+					this.currentTime = 0;
+					this.duration = 0;
+					this.progress = 0;
 
-					var playing = false;
-					var mute = false;
+					var safeApply = function (fn) {
+						var phase = $scope.$root.$$phase;
 
-					var togglePlay = function () {
-						playing = !playing;
-						playButton
-							.removeClass('play')
-							.removeClass('pause')
-							.addClass(playing ? 'pause' : 'play');
-
-						if (playing) {
-							audio.play();
-							updateCurrentTime();
+						if(phase === '$apply' || phase === '$digest') {
+							fn();
 						} else {
-							audio.pause();
+							$scope.$apply(fn);
 						}
 					};
 
-					var toggleSound = function () {
-						mute = !mute;
-						muteButton
-							.removeClass('mute')
-							.removeClass('unmute')
-							.addClass(mute ? 'unmute' : 'mute');
+					$scope.$on('audio.durationchange', function () {
+						safeApply(function () {
+							audioCtrl.duration = audio.duration();
+						});
+					});
 
-						if (mute) {
-							audio.mute();
-						} else {
-							audio.unmute();
-						}
+					$scope.$on('audio.timeupdate', function () {
+						safeApply(function () {
+							audioCtrl.currentTime = audio.currentTime();
+							audioCtrl.progress = audio.currentTime() / audio.duration() * 100;
+						});
+					});
+
+					$scope.$on('audio.ended', function () {
+						audio.pause().currentTime(0);
+
+						safeApply(function () {
+							audioCtrl.playing = false;
+							audioCtrl.currentTime = 0;
+						})
+					});
+
+					this.togglePlay = function () {
+						audio.paused() ? audio.play() : audio.pause();
+
+						safeApply(function () {
+							audioCtrl.playing = !audio.paused();
+						});
 					};
 
-					var updateCurrentTime = function () {
-						var percent = Math.floor(audio.currentTime() / audio.duration() * 100);
+					this.toggleSound = function () {
+						audio.muted() ? audio.unmute() : audio.mute();
 
-						if (!isNaN(percent)) {
-							scrubBar.val(percent);
-						}
-
-						if (!audio.paused()) {
-							$timeout(updateCurrentTime, 500);
-						}
+						safeApply(function () {
+							audioCtrl.muted = audio.muted();
+						});
 					};
 
-					playButton.on('click', function () {
-						togglePlay();
-					});
-
-					muteButton.on('click', function () {
-						toggleSound();
-					});
-
-					scope.$watch('source', function (newValue, oldValue) {
-						if (newValue) {
-							audio.source(newValue);
-						}
-
-						updateCurrentTime();
-					});
-				}
+					audio.source($scope.source);
+					audio.source($scope.source);
+				} ]
 			};
 		} ]);
 } ());

@@ -3,13 +3,34 @@
  */
 (function () {
 	angular.module('ng-player.services', [ ])
-		.factory('audio', [ function () {
+		.factory('audio', [ '$rootScope', function ($scope) {
 			/**
 			 * Wrapper for HTML5 Audio class
 			 * @constructor
 			 */
 			var AudioService = function () {
 				var audio = new Audio();
+
+				audio.addEventListener('durationchange', function () {
+					$scope.$broadcast('audio.durationchange');
+				});
+
+				audio.addEventListener('play', function () {
+					$scope.$broadcast('audio.play');
+				});
+
+				audio.addEventListener('pause', function () {
+					$scope.$broadcast('audio.pause');
+				});
+
+				audio.addEventListener('timeupdate', function () {
+					$scope.$broadcast('audio.timeupdate');
+				});
+
+				audio.addEventListener('ended', function () {
+					$scope.$broadcast('audio.ended');
+				});
+
 				/**
 				 * Play current audio
 				 * @returns {AudioService}
@@ -61,11 +82,17 @@
 					return this;
 				};
 				/**
-				 * Get current time in seconds
+				 * Get/set current time in seconds
 				 * @returns {Number|currentTime}
 				 */
-				this.currentTime = function () {
-					return audio.currentTime;
+				this.currentTime = function (value) {
+					if (value === undefined) {
+						return audio.currentTime;
+					}
+
+					audio.currentTime = value;
+
+					return this;
 				};
 				/**
 				 * Get duration in seconds
