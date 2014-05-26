@@ -1,0 +1,25 @@
+{
+  "name": "ng-player",
+  "version": "1.0.0",
+  "authors": [
+    "Flammenmensch <maleventum@gmail.com>"
+  ],
+  "description": "Music player built with AngularJS",
+  "keywords": [
+    "angular",
+    "music",
+    "player"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.16"
+  }
+}
