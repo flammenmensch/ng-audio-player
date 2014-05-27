@@ -50,7 +50,7 @@
 						safeApply(function () {
 							audioCtrl.playing = false;
 							audioCtrl.currentTime = 0;
-						})
+						});
 					});
 
 					this.togglePlay = function () {

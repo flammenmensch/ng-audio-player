@@ -6,8 +6,17 @@
     border: 1px solid #ccc;
     padding: 5px;
     position: relative;
-    width: 418px;
-    background: rgb(246,248,249); /* Old browsers */
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    align-items: center;
     background: -moz-linear-gradient(top,  rgba(246,248,249,1) 0%, rgba(229,235,238,1) 50%, rgba(215,222,227,1) 51%, rgba(245,247,249,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(50%,rgba(229,235,238,1)), color-stop(51%,rgba(215,222,227,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
@@ -23,6 +32,7 @@
     width: 24px;
     height: 24px;
     content: '';
+    margin: 0 5px 0 0;
     background-repeat: no-repeat;
     background-position: 50% 50%;
     cursor: pointer;
@@ -45,12 +55,26 @@
 }
 
 .scrub-bar {
-    position: relative;
     width: 238px;
+    -webkit-appearance: none;
+    background-color: #333;
+    height:2px;
+    margin: 0 5px 0 0;
+    flex: 1;
+    display: block;
+}
+
+.scrub-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-border-radius: 8px;
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(50, 50, 50, 0.6);
+    background-color: #fff;
+    width: 16px;
+    height: 16px;
 }
 
 .time-label {
-    position: relative;
     text-align: right;
-    font-family: "Lucida Grande";
+    font-family: "Tahoma";
+    font-size: 12px;
 }
