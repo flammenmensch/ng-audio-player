@@ -10,6 +10,8 @@
 			 */
 			var AudioService = function () {
 				var audio = new Audio();
+				audio.preload = 'auto';
+				audio.autoplay = true;
 
 				audio.addEventListener('durationchange', function () {
 					$scope.$broadcast('audio.durationchange');

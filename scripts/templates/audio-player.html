@@ -1,7 +1,7 @@
 <div class="audio-player">
     <button class="btn play" ng-class="{ pause:audioCtrl.playing }" ng-click="audioCtrl.togglePlay()"></button>
 
-    <input type="range" min="0" max="100" ng-model="audioCtrl.progress" class="scrub-bar" readonly>
+    <input type="range" min="0" max="100" ng-model="audioCtrl.progress" class="scrub-bar" ng-change="audioCtrl.updateCurrentTime()">
 
     <button class="btn mute" ng-class="{ unmute:audioCtrl.muted }" ng-click="audioCtrl.toggleSound()"></button>
 
